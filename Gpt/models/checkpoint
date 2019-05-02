@@ -1,0 +1,2 @@
+model_checkpoint_path: "gpt_music"
+all_model_checkpoint_paths: "gpt_music"
