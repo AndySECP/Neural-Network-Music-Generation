@@ -16,6 +16,8 @@ There are already extensive researches on the challenge of artificial music gene
 
 ## Approach
 
+We **encode music into tokens** and frame music generation as a **language modeling problem**. We generate text by feeding the LSTM or Transformer a prompt sequence and have it predict the next words. The output sequence is then decoded into a midi file.
+
 1. As a first baseline, we are buidling a **bi-LSTM model** 
 2. We are improving our model building up on the last OpenAI publication and implementing a **GPT network**
 3. The model are currently evaluating using a **customized BLEU score**
