@@ -20,6 +20,30 @@ There are already extensive researches on the challenge of artificial music gene
 2. We are improving our model building up on the last OpenAI publication and implementing a GPT network
 3. The model are currently evaluating using a customized BLEU score
 
+## Evaluation
+
+To have a quatitative metric to evaluate our generated sample, we are using blue score. Several approaches are tried. 
+- Looking at different cummulated ngrams
+- Creating a customized bleu score that reflect what we want our generated samples to demonstrate
+
+Customized BLEU socre:
+To have a better metric, we can weight differently the n_grams. We expect 1-gram BLEU score to be equal to 1 as by using a sufficiently large reference corpus all the notes available are going to be used. Therefore, we can input a smaller weight to small grams, then a higher weights for higher grams and at end diminishing the weight again for very large grams (8-9) for the sake of diversity.
+
+Weigths proposal:
+- 1-gram: 0
+- 2-gram: 1/12
+- 3-gram: 1/12
+- 4-gram: 1/6
+- 5-gram: 1/6
+- 6-gram: 1/6
+- 7-gram: 1/6
+- 8-gram: 1/12
+- 9-gram: 1/12
+
+For the LSTM generated samples, the results are pretty with the BLEU evaluation, and are close to real compositions for both cumulated ngrams as well as our customized metric function. For the GPT generated samples, the current samples performances are not as good at the light of the BLEU score evaluation:
+
+
+
 
 ## Papers
 
