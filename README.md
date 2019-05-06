@@ -56,5 +56,7 @@ For the LSTM generated samples, the results are pretty with the BLEU evaluation,
 ## Papers
 
 [1] DeepJ: Style Specific Music Generation - 2018
+
 [2] Yu, L., Zhang W., Wang J., and Yu, Y. Seqgan: Sequence generative adversarial nets with policy gradient. arXiv preprint arXiv:1609.05473, 2016
+
 [3] Midinet: A Convolutional Generative Adversarial Network for Symbolic Domain Music Generation - 2017
