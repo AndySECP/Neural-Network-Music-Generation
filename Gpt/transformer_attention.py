@@ -25,22 +25,18 @@ class AttentionQKV(Model):
 
             :return: output: Tensor with shape [batch_size, heads (optional), n_queries, depth_v]
         """
-        ####################################  YOUR CODE HERE  ####################################
         # n_queries corresponds to the sequence length on the query side
         # n_keyval corresponds to the sequence length on the key side (and value, as they are one and the same)
         # depth_k is the size of the projection that the key / query comparison is performed on.
         # depth_v is the size of the projection of the value projection. In a setting with one head, it is usually the dimension (dim) of the Transformer.
         # heads corresponds to the number of heads the attention is performed on.
-        # If you are unfamiliar with attention heads, read section 3.2.2 of the Attentino is all you need paper
          
         ###
         # The output is computed as a weighted sum of the values, where the weight assigned to each value is 
         # computed by a compatibility function of the query with the corresponding key.
         ###
         
-        # PART 1: Implement Attention QKV
-
-        # Use queries, keys and values to compute the output of the QKV attention
+        # PART 1: Implementation of Attention QKV
         
         Q = queries
         K = keys
@@ -53,7 +49,6 @@ class AttentionQKV(Model):
         masked_similarity = self.apply_mask(similarity, mask=mask) # We give you the mask to apply so that it is correct, you do not need to modify this.
         weights = tf.nn.softmax(masked_similarity) # Turn the similarity into a normalized output (softmax)
         output = tf.matmul(weights, V) # Obtain the output
-        ####################################  END OF YOUR CODE  ##################################
 
         return output, weights
 
@@ -103,18 +98,12 @@ class MultiHeadProjection(Model):
 
     def _split_heads(self, tensor):
         tensor.shape.assert_has_rank(3)
-        ####################################  YOUR CODE HERE  ####################################
-        # PART 2: Implement the Multi-head attention.
-        # You are given a Tensor which is one of the projections (K, Q or V)
-        # and you must "split it" in self.n_heads. This splitting should add a dimension to the tensor,
-        # so that each head acts independently
-        
+        # PART 2: Implementation of the Multi-head attention.
+       
         batch_size, tensorlen = tf.shape(tensor)[0], tf.shape(tensor)[1]
         feature_size = tensor.shape.as_list()[2]
 
         new_feature_size = int(feature_size / self.n_heads) # Compute what the feature size per head is.
-        # Reshape this projection tensor so that it has n_heads, each of new_feature_size
-        #tensor = tf.reshape(tensor,[-1, tensorlen, new_feature_size, self.n_heads])
         t1 = []
         for i in range(self.n_heads):
             t1.append(tf.slice(tensor, begin = [0,0, i*new_feature_size], size = [batch_size, tensorlen, new_feature_size]))
@@ -126,13 +115,13 @@ class MultiHeadProjection(Model):
         # batch_size, n_heads, tensorlen, feature_size
         
         return tensor
-        ##########################################################################################
+
 
     def _combine_heads(self, tensor):
         tensor.shape.assert_has_rank(4)
-        ####################################  YOUR CODE HERE  ####################################
-        # PART 2: Implement the Multi-head attention.
-        # You are given the output from all the heads, and you must combine them back into 1 rank-3 matrix
+
+        # PART 2: Implementation of the Multi-head attention.
+        # we are given the output from all the heads, and you must combine them back into 1 rank-3 matrix
 
         # Transpose back compared to the split, so that the outer dimensions are batch_size and sequence_length again
         tensor = tf.transpose(tensor, perm=[0, 2, 1, 3])
@@ -145,7 +134,7 @@ class MultiHeadProjection(Model):
         tensor = tf.reshape(tensor,[batch_size, tensorlen, new_feature_size]) # Reshape the Tensor to remove the heads dimension and come back to a Rank-3 tensor
         
         return tensor
-        ##########################################################################################
+
 
 class MultiHeadAttention(Model):
     """

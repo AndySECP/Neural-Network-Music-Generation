@@ -97,9 +97,8 @@ class TransformerDecoderBlock(Model):
 
     def call(self, decoder_inputs, self_attention_mask=None):    
         # The cross-attention mask should have shape [batch_size x target_len x input_len]
-
-        ####################################  YOUR CODE HERE  ####################################
-        # PART 4: Implement the Transformer Decoder.
+  
+        # PART 4: Transformer Decoder.
 
         # Step 1
         # Normalize the decoder's input using the self_norm
@@ -287,19 +286,14 @@ class GPT(Model):
         # as input a tensor of shape [batch_size x source_length x input_feature_shape]
         # and generate a tensor of shape [batch_size x source_length x d_model]
 
-        ####################################  YOUR CODE HERE  ####################################
-        # PART 5: Implement the full GPT block
+
+        # PART 5: Implementation of the full GPT block
 
         # Part 2: Decode
         # Finally, we need to do a decoding this should generate a
         # tensor of shape [batch_size x target_length x d_model]
         # from the encoder output.
 
-        # Using the self.decoder, provide it with the decoder input, and the encoder_output. 
-
-        # As usual, provide it with the encoder and decoder_masks
-        # Finally, You should also pass it these two optional arguments:
-        # shift_target_sequence_right=shift_target_sequence_right, mask_future=mask_future
         decoder_output = self.decoder(target_sequence, decoder_mask=decoder_mask, 
                                       mask_future=mask_future,
                                       shift_target_sequence_right=shift_target_sequence_right)
