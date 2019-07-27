@@ -1,5 +1,5 @@
 # Neural-Network-Music-Generation
-Leverage state of the art AI models to generate human sounding musics
+Leverage state of the art NLP models to generate human sounding musics
 
 This project is part of the class CS282-Designing and Visualizing Neural Networks, with professor John Canny at UC Berkeley.
 
